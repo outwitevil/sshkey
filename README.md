@@ -6,7 +6,7 @@ Generate private and public SSH keys (RSA and DSA supported) using pure Ruby.
 
 ## Requirements
 
-Tested / supported on CRuby 1.8.7+ and JRuby.
+Tested / supported on CRuby 1.9.3+ and JRuby.
 
 ## Installation
 
@@ -35,7 +35,8 @@ k = SSHKey.generate(
 Return an SSHKey object from an existing RSA or DSA private key (provided as a string).
 
 ```ruby
-k = SSHKey.new(File.read("~/.ssh/id_rsa"), comment: "foo@bar.com")
+f = File.read(File.expand_path("~/.ssh/id_rsa"))
+k = SSHKey.new(f, comment: "foo@bar.com")
 ```
 
 ### The SSHKey object
@@ -61,11 +62,11 @@ k.ssh_public_key
 
 #### Encryption
 
-If a passcode is set when a key is generated or by setting the `passcode` accessor, you can
+If a passphrase is set when a key is generated or by setting the `passphrase` accessor, you can
 fetch the encrypted version of the private key.
 
 ```ruby
-k.passcode = "foo"
+k.passphrase = "foo"
 # => "foo"
 
 k.encrypted_private_key
@@ -211,4 +212,4 @@ SSHKey.ssh_public_key_to_ssh2_public_key "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ
 
 ## Copyright
 
-Copyright (c) 2011-2015 James Miller
+Copyright (c) 2011-2016 James Miller
